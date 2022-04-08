@@ -16,6 +16,8 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
         <!-- CSS Files -->
+        <link href="../admin/css/nucleo-icons.css" rel="stylesheet">
+        <link href="../admin/css/nucleo-svg.css" rel="stylesheet">
   <link id="pagestyle" href="../admin/css/material-dashboard.css?v=3.0.2" rel="stylesheet" />
 
     <!-- Styles -->
@@ -30,7 +32,6 @@
             @include('layouts.inc.adminfooter')
         </div>
     </main>
-
      <!-- Scripts -->
      <script src="{{ asset('admin/js/core/bootstrap.bundle.min.js') }}" defer></script>
      <script src="{{ asset('admin/js/core/popper.min.js') }}" defer></script>
@@ -38,6 +39,8 @@
      <script src="{{ asset('admin/js/plugins/perfect-scrollbar.min.js') }}" defer></script>
      <script src="{{ asset('admin/js/plugins/smooth-scrollbar.min.js') }}" defer></script>
      <script src="{{ asset('admin/js/plugins/chartjs.min.js') }}" defer></script>
+     <script src="{{ asset('admin/js/plugins/material-dashboard.min.js?v=3.0.2') }}" defer></script>
+     <script src="https://buttons.github.io/buttons.js" defer></script>
     @yield('script')
 </body>
 </html>
