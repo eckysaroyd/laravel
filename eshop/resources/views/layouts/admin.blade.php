@@ -21,11 +21,13 @@
     <link href="{{ asset('frontend/css/boostrap5.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div class="wrapper ">
+    <div class="body-wrapper">
         @include('layouts.inc.sidebar')
-        <div class="main-panel">
+        <!-- partial -->
+        <div class="main-wrapper mdc-drawer-app-content">
+          <!-- partial:partials/_navbar.html -->
             @include('layouts.inc.adminnav')
-            <div class="content">
+            <div class="page-wrapper mdc-toolbar-fixed-adjust">
                 @yield('content')
                 @include('layouts.inc.adminfooter')
             </div>
