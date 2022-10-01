@@ -24,5 +24,17 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 
+//Admin login route without admin group
+// Route::get('admin/login','App\Http\Controllers\Admin\AdminController@login');
+
 // Admin dashboard route without admin group
-Route::get('admin/dashboard','App\Http\Controllers\Admin\AdminController@dashboard');
+// Route::get('admin/dashboard','App\Http\Controllers\Admin\AdminController@dashboard');
+
+// Admin route grouped
+Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
+   //Admin login route
+    Route::match(['get','post'],'login','AdminController@login');
+
+    // Admin dashboard route
+    Route::get('dashboard','AdminController@dashboard');
+});
