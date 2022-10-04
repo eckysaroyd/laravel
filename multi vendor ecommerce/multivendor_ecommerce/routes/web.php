@@ -34,7 +34,10 @@ require __DIR__.'/auth.php';
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
    //Admin login route
     Route::match(['get','post'],'login','AdminController@login');
+    //route group for middleware --all routes inside middleware are protected routes
+    Route::group(['middleware'=>['admin']],function () {
+         // Admin dashboard route
+        Route::get('dashboard','AdminController@dashboard');
 
-    // Admin dashboard route
-    Route::get('dashboard','AdminController@dashboard');
+    });
 });
