@@ -11,7 +11,13 @@ class AdminController extends Controller
     public function dashboard(){
         return view('admin.dashboard');
     }
-    public function login(){
+    public function login(Request $request){
+       if($request->isMethod('post')){
+        $data=$request->all();
+        echo "<pre>";
+        print_r($data);
+       }
         return view('admin.login');
+
     }
 }
