@@ -31,12 +31,20 @@
               </div>
               <h4>Hello! let's get started</h4>
               <h6 class="font-weight-light">Sign in to continue.</h6>
+              @if(Session::has('error_message'))
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Error:</strong> Username or Password is invalid.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              @endif
               <form class="pt-3" action="{{ url('admin/login') }}" method="post">@csrf
                 <div class="form-group">
                   <input type="email" name="email" class="form-control form-control-lg" id="email" placeholder="Username" required="">
                 </div>
                 <div class="form-group">
-                  <input type="password" name="Password"  class="form-control form-control-lg" id="Password" placeholder="Password" required="">
+                  <input type="password" name="password"  class="form-control form-control-lg" id="Password" placeholder="Password" required="">
                 </div>
                 <div class="mt-3">
                   <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit">SIGN IN</button>
