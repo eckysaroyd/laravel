@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class APIController extends Controller
 {
-    //
     public function getUsers($id=null){
         if(empty($id)){
             $users = User::get();
@@ -16,8 +15,6 @@ class APIController extends Controller
             $users = User::find($id);
             return response()->json(["users"=>$users]);
         }
-
-
     }
     public function addUsers(request $request){
         if($request->isMethod('post')){
@@ -31,4 +28,21 @@ class APIController extends Controller
             return response()->json(['message'=>'User added successfully!']);
         }
     }
+    public function addMultipleUsers(request $request){
+    if($request->isMethod('post')){
+        $userData = $request->input();
+        // echo "<pre>";
+        // print_r($userData);
+        // die;
+        foreach ($userData['users'] as $key => $value) {
+            $user = new User;
+            $user->name = $value['name'];
+            $user->email = $value['email'];
+            $user->password = bcrypt($value['password']);
+            $user->save();
+        }
+        return response()->json(['message'=>'Users added successfully!']);
+    }
+    }
+
 }
