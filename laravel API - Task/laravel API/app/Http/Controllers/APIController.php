@@ -20,6 +20,27 @@ class APIController extends Controller
         if($request->isMethod('post')){
             $userData =$request->input();
 
+            //simple laravel validation
+            //check is any input is empty
+            if(empty($userData['name']) || empty($userData['email']) ||  empty($userData['password'])){
+                $error_message = "Please enter complete user details";
+                return response()->json(["status"=>false,"message"=>$error_message],422);
+            }
+            //validate email
+            if (!filter_var($userData['email'], FILTER_VALIDATE_EMAIL)) {
+                $error_message = "Please enter Valid Email";
+                return response()->json(["status"=>false,"message"=>$error_message],422);
+            }
+            //validate if email is present
+            $userCount = User::where('email',$userData['email'])->count();
+            if($userCount>0){
+                $error_message = "Email Already Exist..!!";
+                return response()->json(["status"=>false,"message"=>$error_message],422);
+            }
+            if(isset($error_message)&&!empty($error_message)){
+                return response()->json(["status"=>false,"message"=>$error_message],422);
+            }
+
             $user = new User;
             $user->name = $userData['name'];
             $user->email = $userData['email'];
