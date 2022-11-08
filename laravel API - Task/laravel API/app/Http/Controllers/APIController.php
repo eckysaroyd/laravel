@@ -56,7 +56,7 @@ class APIController extends Controller
                 "email.unique"=>"User already exists in our database",
                 "password.required"=>"Password is required"
            ];
-           $validator =Validator::make($userData,$rules);
+           $validator =Validator::make($userData,$rules,$customMessage);
            if($validator->fails()){
                 return response()->json($validator->errors(),422);
            }
@@ -72,9 +72,22 @@ class APIController extends Controller
     public function addMultipleUsers(request $request){
     if($request->isMethod('post')){
         $userData = $request->input();
-        // echo "<pre>";
-        // print_r($userData);
-        // die;
+        $rules= [
+            "users.*.name"=>"required|regex:/^[a-zA-Z]+$/u",
+            "users.*.email"=>"required|email|unique:users",
+            "users.*.password"=>"required"
+       ];
+       $customMessage = [
+            "name.required"=>"Name is required",
+            "email.required"=>"Email is required",
+            "email.email"=>"Valid Email is required",
+            "email.unique"=>"User already exists in our database",
+            "password.required"=>"Password is required"
+       ];
+       $validator =Validator::make($userData,$rules,$customMessage);
+       if($validator->fails()){
+            return response()->json($validator->errors(),422);
+       }
         foreach ($userData['users'] as $key => $value) {
             $user = new User;
             $user->name = $value['name'];
