@@ -22,44 +22,26 @@ class APIController extends Controller
         if($request->isMethod('post')){
             $userData =$request->input();
 
-            //simple laravel validation
-            //check is any input is empty
-            // if(empty($userData['name']) || empty($userData['email']) ||  empty($userData['password'])){
-            //     $error_message = "Please enter complete user details";
-            //     return response()->json(["status"=>false,"message"=>$error_message],422);
-            // }
-            // //validate email
-            // if (!filter_var($userData['email'], FILTER_VALIDATE_EMAIL)) {
-            //     $error_message = "Please enter Valid Email";
-            //     return response()->json(["status"=>false,"message"=>$error_message],422);
-            // }
-            // //validate if email is present
-            // $userCount = User::where('email',$userData['email'])->count();
-            // if($userCount>0){
-            //     $error_message = "Email Already Exist..!!";
-            //     return response()->json(["status"=>false,"message"=>$error_message],422);
-            // }
-            // if(isset($error_message)&&!empty($error_message)){
-            //     return response()->json(["status"=>false,"message"=>$error_message],422);
-            // }
-
-            //advanced POST API validation
-           $rules= [
-                "name"=>"required|regex:/^[a-zA-Z]+$/u",
-                "email"=>"required|email|unique:users",
-                "password"=>"required"
-           ];
-           $customMessage = [
-                "name.required"=>"Name is required",
-                "email.required"=>"Email is required",
-                "email.email"=>"Valid Email is required",
-                "email.unique"=>"User already exists in our database",
-                "password.required"=>"Password is required"
-           ];
-           $validator =Validator::make($userData,$rules,$customMessage);
-           if($validator->fails()){
-                return response()->json($validator->errors(),422);
-           }
+            // simple laravel validation
+            // check is any input is empty
+            if(empty($userData['name']) || empty($userData['email']) ||  empty($userData['password'])){
+                $error_message = "Please enter complete user details";
+                return response()->json(["status"=>false,"message"=>$error_message],422);
+            }
+            //validate email
+            if (!filter_var($userData['email'], FILTER_VALIDATE_EMAIL)) {
+                $error_message = "Please enter Valid Email";
+                return response()->json(["status"=>false,"message"=>$error_message],422);
+            }
+            //validate if email is present
+            $userCount = User::where('email',$userData['email'])->count();
+            if($userCount>0){
+                $error_message = "Email Already Exist..!!";
+                return response()->json(["status"=>false,"message"=>$error_message],422);
+            }
+            if(isset($error_message)&&!empty($error_message)){
+                return response()->json(["status"=>false,"message"=>$error_message],422);
+            }
 
             $user = new User;
             $user->name = $userData['name'];
@@ -98,5 +80,30 @@ class APIController extends Controller
         return response()->json(['message'=>'Users added successfully!'],201);
     }
     }
+    public function updateUserDetails(request $request,$id){
+        if($request->isMethod('put')){
+        $userData = $request->input();
+             //advanced PUT API validation
+                $rules= [
+                    "name"=>"required|regex:/^[a-zA-Z]+$/u",
+                    "email"=>"required|email",
+                    "password"=>"required"
+                ];
+                $customMessage = [
+                    "name.required"=>"Name is required",
+                    "email.required"=>"Email is required",
+                    "email.email"=>"Valid Email is required",
+                    "password.required"=>"Password is required"
+                ];
+                $validator =Validator::make($userData,$rules,$customMessage);
+                if($validator->fails()){
+                    return response()->json($validator->errors(),422);
+                }
 
+            // echo "<pre>"; print_r($userData); die;
+            User::where('id',$id)->update(['name'=>$userData['name'],'email'=>$userData['email'],'password'=>bcrypt($userData['password'])]);
+            return response()->json(['message'=>'User details updated successfully!'],202);
+        }
+
+    }
 }

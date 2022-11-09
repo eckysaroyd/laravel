@@ -28,4 +28,6 @@ Route::namespace('App\Http\Controllers') ->group(function(){
 
     // POST API - Add Multiple users
         Route::post('addMultipleUsers','APIController@addMultipleUsers');
+    //PUT API - Update one or more records
+        Route::put('update-user-details/{id}','APIController@updateUserDetails');
 });
