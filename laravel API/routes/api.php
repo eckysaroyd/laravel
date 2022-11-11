@@ -30,4 +30,12 @@ Route::namespace('App\Http\Controllers') ->group(function(){
         Route::post('addMultipleUsers','APIController@addMultipleUsers');
     //PUT API - Update one or more records
         Route::put('update-user-details/{id}','APIController@updateUserDetails');
+
+    //PATCH API - Update one  records
+        Route::patch('update-user-name/{id}','APIController@updateUserName');
+
+    //delete single user with Param
+        Route::delete('deleteUsers/{id}','APIController@delete_users');
+    //delete single user with JSON
+    Route::delete('deleteUsers/{id}','APIController@delete_users_with_json');
 });

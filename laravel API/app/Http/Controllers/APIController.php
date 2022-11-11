@@ -106,4 +106,33 @@ class APIController extends Controller
         }
 
     }
+    public function updateUserName(request $request, $id){
+            if($request->isMethod('patch')){
+                $userData = $request->input();
+                $rules= ["name"=>"required|regex:/^[a-zA-Z]+$/u"];
+                $customMessage = ["name.required"=>"Name is required"];
+                $validator =Validator::make($userData,$rules,$customMessage);
+               if($validator->fails()){
+                    return response()->json($validator->errors(),422);
+               }
+
+                User::where('id',$id)->update(['name'=>$userData['name']]);
+                return response()->json(['message'=>'Usere details updated successfully'],202);
+        }
+    }
+    public function delete_users(request $request, $id)
+    {
+        if($request->isMethod('delete')){
+            User::where('id',$id)->delete();
+            return response()->json(['message'=>'User deleted successfully!'],202);
+        }
+    }
+    public function delete_users_with_json(request $request){
+        if($request->isMethod('delete')){
+            $userData = $request->input();
+            User::where('id',$userData['id'])->delete();
+            return response()->json(['message'=>'User deleted successfully!'],202);
+
+        }
+    }
 }
