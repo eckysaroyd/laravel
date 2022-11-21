@@ -141,4 +141,18 @@ class APIController extends Controller
         return response()->json(["message"=>"Users deleted Successful"],202);
 
     }
+    public function deleteMultipleUsersJson(request $request){
+        if($request->isMethod('delete')){
+            $userData = $request->all();
+            // User::whereIn('id',$ids['ids'])->delete();
+            foreach($userData as $key => $value){
+                // print_r($value);
+                // die;
+                User::whereIn('id',$value)->delete();
+            }
+            return response()->json(["message"=>"Users deleted Successful"],202);
+
+        }
+
+    }
 }
