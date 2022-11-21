@@ -135,4 +135,10 @@ class APIController extends Controller
 
         }
     }
+    public function deleteMultiple($ids){
+        $ids=explode(",",$ids);
+        User::whereIn('id',$ids)->delete();
+        return response()->json(["message"=>"Users deleted Successful"],202);
+
+    }
 }
