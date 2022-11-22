@@ -23,6 +23,10 @@ Route::namespace('App\Http\Controllers') ->group(function(){
     // GET API - Fetch one or more records
         Route::get('users/{id?}','APIController@getUsers');
 
+    //secure GET API - Fetch one or more records
+        Route::get('usersList','APIController@getUsersList');
+
+
     // POST API - Add single user
         Route::post('addUsers','APIController@addUsers');
 
@@ -40,7 +44,9 @@ Route::namespace('App\Http\Controllers') ->group(function(){
     Route::delete('deleteUsers/{id}','APIController@delete_users_with_json');
     //Delete multiple Users
     Route::delete('deleteMultipleUsers/{ids}','APIController@deleteMultiple');
-    // deleteMultipleUsersJson
+    // delete Multiple Users with Json
     Route::delete("deleteMultipleUsersJson",'APIController@deleteMultipleUsersJson');
+
+
 });
 
