@@ -17,13 +17,13 @@ class insert_records_into_user_table extends Seeder
         //
         $users = [
                 [
-                    'name'=>'ecky',
-                    'email'=>'ecky@gmail.com',
+                    'name'=>'eckys',
+                    'email'=>'eckys@gmail.com',
                     'password'=>bcrypt('123456')
                 ],
                 [
-                    'name'=>'amit',
-                    'email'=>'amit@youremail.com',
+                    'name'=>'amits',
+                    'email'=>'amits@youremail.com',
                     'password'=>bcrypt('123456')
                 ],
         ];
